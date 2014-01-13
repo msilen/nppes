@@ -1,4 +1,8 @@
 module Nppes
+require 'activerecord-import'
+require "activerecord-import/base"
+ActiveRecord::Import.require_adapter('postgresql')#TODO:make flexible
+
   class NpIdentifier < ActiveRecord::Base
     has_many :np_licenses, dependent: :destroy
     has_many :np_addresses, dependent: :destroy

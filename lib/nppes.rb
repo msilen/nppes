@@ -22,7 +22,7 @@ module Nppes
 
   class << self
     def logger
-      @@logger ||= Logger.new(File.join(Rails.root, 'log', 'delayed_job.log'))
+      @@logger ||= Logger.new(File.join(__dir__,'delayed_job.log'))
     end
 
     def setup

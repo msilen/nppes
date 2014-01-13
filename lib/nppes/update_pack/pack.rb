@@ -9,7 +9,6 @@ module Nppes
         def proceed(zip_file)
           Nppes.logger.warn 'proceed file'
           zip = Zip::File.open(zip_file)
-
           data = zip.entries.detect {|entry| entry.name =~ /npidata_\d+-\d+\.csv/}
           #head = zip.entries.detect {|entry| entry.name =~ /npidata_\d+-\d+FileHeader\.csv/}
 
@@ -78,12 +77,14 @@ module Nppes
 
         protected
           def prepare_file(file_link)
-            Nppes.logger.warn 'prepare file'
-            ret_file = open(file_link)
-            file = Tempfile.new(File.basename(file_link))
-            file << ret_file.read.force_encoding('utf-8')
-            file.flush
-            file.path
+            "/home/dark/work/odesk/HIPS/nppes/NPPES_Data_Dissemination_Dec_2013.zip20140111-26186-17dpliv"
+            #Nppes.logger.warn 'prepare file'
+            #ret_file = open(file_link)
+            #file = Tempfile.new(File.basename(file_link))
+            #file << ret_file.read.force_encoding('utf-8')
+            #byebug
+            #file.flush
+            #file.path
           end
       end
     end
