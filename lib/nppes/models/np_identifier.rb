@@ -1,6 +1,6 @@
-module Nppes
 require 'activerecord-import'
 require "activerecord-import/base"
+module Nppes
 ActiveRecord::Import.require_adapter('postgresql')#TODO:make flexible
 
   class NpIdentifier < ActiveRecord::Base

@@ -18,6 +18,7 @@ module Nppes
 
           data = UpdatePack::Data.new(data.get_input_stream)
           Nppes.logger.warn 'proceed data'
+          #byebug
           data.proceed
         end
 
@@ -77,7 +78,7 @@ module Nppes
 
         protected
           def prepare_file(file_link)
-            "/home/dark/work/odesk/HIPS/nppes/NPPES_Data_Dissemination_Dec_2013.zip20140111-26186-17dpliv"
+            "/home/dark/work/odesk/hisp_current/nppes/NPPES_Data_Dissemination_Dec_2013.zip20140111-26186-17dpliv"
             #Nppes.logger.warn 'prepare file'
             #ret_file = open(file_link)
             #file = Tempfile.new(File.basename(file_link))
