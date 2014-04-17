@@ -16,7 +16,7 @@ module UpdatePack
       set_or_clear_batches
       parse(@file) do |row|
         if @npi_batch.size >= @batch_size_limit 
-          puts "customTimer: #{@cumulative}";@cumulative=0
+          puts "customTimer: #{@cumulative}, count: #{@icount}";@cumulative=0;@icount=0
           print_info;sleep 5
           puts @npi_address_batch.size
           puts @npi_license_batch.size
@@ -48,6 +48,7 @@ module UpdatePack
     def proceed_row(row, required_fields = RequiredFields)
       @fields = split_row(row)
       current_npi=@fields[0].to_i
+      nefia=non_empty_fields_indexes
 
       unless @existing_npis.include? current_npi #old method first_or_initialize won't work because sql query creates, not update records.
         nppes_record = Nppes::NpIdentifier.new(npi: current_npi)
@@ -63,21 +64,19 @@ module UpdatePack
       required_fields.relations.each_pair do |s, f|
         f.each do |entity|
           #relation = nppes_record.send(s).new
-          v_f=get_validity_fields(s,entity)
+          timer_on;@cumulative||=0;@icount||=0
+          v_f=get_validity_fields(s,entity) #v_f=validity_fields
           relation = s.constantize.new
-          subset=(v_f-non_empty_fields_indexes).empty?
-          #byebug
+          subset=(v_f-nefia).empty?
+          @cumulative+=timer_off;@icount+=1
           if subset#check if non_empty_fields_indexes contain all required fields
-          timer_on;@cumulative||=0
             entity.each_pair {|name, num| relation.send("#{name}=", prepare_value(@fields, num))}
-            relation.valid?
-          @cumulative+=timer_off
             unless relation.valid?
-              #nefa=non_empty_fields_indexes
-              byebug unless (nefa & entity.values).blank?
-              #не создавать сущности и заполнять пустые поля - лицензии к примеру
-              #nppes_record.send(s).delete(relation)
-              break
+              byebug
+              #byebug unless (nefa & entity.values).blank?
+              ##не создавать сущности и заполнять пустые поля - лицензии к примеру
+              ##nppes_record.send(s).delete(relation)
+              #break
             end
           else
             next
