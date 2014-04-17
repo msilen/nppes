@@ -15,10 +15,11 @@ module Nppes
           raise Exception.new('head or data not found') unless data || head
 
           #header = UpdatePack::Header.new(head.get_input_stream)
-
-          data = UpdatePack::Data.new(data.get_input_stream)
+          extracted_filename="#{Dir.pwd}/#{data.name}"
+          data.extract unless File.exists?(extracted_filename)
+          data = UpdatePack::Data.new(File.open(extracted_filename))
+          #data = UpdatePack::Data.new(data.get_input_stream) #single entry! because of detect
           Nppes.logger.warn 'proceed data'
-          #byebug
           data.proceed
         end
 
@@ -78,7 +79,9 @@ module Nppes
 
         protected
           def prepare_file(file_link)
-            "/home/dark/work/odesk/hisp_current/nppes/NPPES_Data_Dissemination_Dec_2013.zip20140111-26186-17dpliv"
+            "/home/dark/work/nppes/NPPES_Data_Dissemination_Mar_2014.zip"
+            #"/home/dark/work/nppes/diss/arc.zip"
+
             #Nppes.logger.warn 'prepare file'
             #ret_file = open(file_link)
             #file = Tempfile.new(File.basename(file_link))

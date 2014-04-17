@@ -43,7 +43,7 @@ module Nppes
       }
 
       self.relations = {
-        np_addresses:
+        "Nppes::NpAddress" =>
           [
             {
                 address_type: 'official',
@@ -54,7 +54,7 @@ module Nppes
                 state: 31,
                 country: 33,
                 zip: 32,
-                phone: [34, 46]
+                phone: [34, 46],
             },
             {
                 address_type: 'mailing',
@@ -69,7 +69,7 @@ module Nppes
             }
           ],
 
-        np_licenses:
+        "Nppes::NpLicense" => 
           (0..14).each_with_object([]) do |i, ret|
             ret <<
             {

@@ -6,21 +6,43 @@ module UpdatePack
       @existing_npis=Nppes::NpIdentifier.pluck(:npi) #array of integers
     end
 
+    def set_or_clear_batches
+      @npi_batch, @npi_address_batch, @npi_license_batch=[],[],[]
+    end
+
     def proceed
+      @batch_size_limit=1000
       batch_timer_checkset
-      npi_batch=[]
+      set_or_clear_batches
       parse(@file) do |row|
-        if npi_batch.size >= 1000
-          puts "split_row #{@cumulative}";@cumulative=0
+        if @npi_batch.size >= @batch_size_limit 
+          puts "customTimer: #{@cumulative}";@cumulative=0
           print_info;sleep 5
-          NpIdentifier.import npi_batch
-          npi_batch.clear
-          #break
+          puts @npi_address_batch.size
+          puts @npi_license_batch.size
+          NpIdentifier.import @npi_batch
+          form_npi_association_batch #now @npi_license_batch and npi_address_batch are modified to be imported
+          NpLicense.import @npi_license_batch
+          NpAddress.import @npi_address_batch
+          set_or_clear_batches
+          #oreak
         end
         processed_row=proceed_row(row)
-        npi_batch << processed_row if processed_row  #packing npi_batch
+        @npi_batch << processed_row if processed_row  #packing npi_batch
       end
      end
+
+    def form_npi_association_batch
+      resulted_ids=NpIdentifier.limit(@batch_size_limit).order('id desc').pluck(:id,:npi)#getting actual ids after import
+      [@npi_license_batch, @npi_address_batch].each do |association|
+        association.map! do |ass|
+          cur_npi=ass.last
+          cur_id=resulted_ids.rassoc(cur_npi).first
+          ass.first.np_identifier_id=cur_id
+          ass.first
+        end
+      end
+    end
 
 
     def proceed_row(row, required_fields = RequiredFields)
@@ -33,24 +55,34 @@ module UpdatePack
         return nil
       end
 
-        timer_on;@cumulative ||=0
-        byebug
+      #filling main model record(NpIdentifier)
       required_fields.fields.each_pair { |k, v| nppes_record.send("#{k}=", prepare_value(@fields, v)) }
-        @cumulative+=timer_off;
       # for submodels
       #s - submodels f -fields with indexes s :np_addresses | :np_licenses
-      #f -> [{:address_type=>"official", :address1=>28,:zip=>32} {:address_type=>"mailing", :address1=>20,...}]
+      #f -> [{:address_type=>"official", :address1=>28,:zip=>32}, {:address_type=>"mailing", :address1=>20,...}]
       required_fields.relations.each_pair do |s, f|
         f.each do |entity|
-          relation = nppes_record.send(s).new
-          entity.each_pair {|name, num| relation.send("#{name}=", prepare_value(@fields, num))}
-          unless relation.valid?
-            nefa=non_empty_fields_indexes
-            #byebug unless (nefa & entity.values).blank?
-            #не создавать сущности и заполнять пустые поля - лицензии к примеру
-            nppes_record.send(s).delete(relation)
-            break
+          #relation = nppes_record.send(s).new
+          v_f=get_validity_fields(s,entity)
+          relation = s.constantize.new
+          subset=(v_f-non_empty_fields_indexes).empty?
+          #byebug
+          if subset#check if non_empty_fields_indexes contain all required fields
+          timer_on;@cumulative||=0
+            entity.each_pair {|name, num| relation.send("#{name}=", prepare_value(@fields, num))}
+            relation.valid?
+          @cumulative+=timer_off
+            unless relation.valid?
+              #nefa=non_empty_fields_indexes
+              byebug unless (nefa & entity.values).blank?
+              #не создавать сущности и заполнять пустые поля - лицензии к примеру
+              #nppes_record.send(s).delete(relation)
+              break
+            end
+          else
+            next
           end
+          add_to_relevant_batch(s,relation,current_npi)
         end
       end
     #  nppes_record.save if nppes_record.valid?
@@ -58,6 +90,23 @@ module UpdatePack
     end
 
     protected
+
+    def get_validity_fields(submodel,fields_and_positions)
+      #f_and_p: {:taxonomy_code=>47,... :healthcare_taxonomy_switch=>50}
+      validity_fields = {
+        "Nppes::NpAddress" => [:address1,:city,:state,:country,:zip],
+        "Nppes::NpLicense" => [:license_number,:taxonomy_code]
+      }
+      return fields_and_positions.values_at(*validity_fields[submodel])
+    end
+
+    def add_to_relevant_batch(submodel,relation,current_npi)
+      if submodel=="Nppes::NpAddress"
+        @npi_address_batch<<[relation,current_npi]
+      else
+        @npi_license_batch<<[relation,current_npi]
+      end
+    end
 
     def timer_on
       @mark_one=Time.now
@@ -98,7 +147,7 @@ module UpdatePack
     def print_info
       batch_timer_checkset
       records_total ||= 0
-      records_total+=1000
+      records_total+=@batch_size_limit
       puts "elapsed: #{@seconds_for_previous_batch}"
       puts "total_records: #{records_total}"
     end
