@@ -17,7 +17,7 @@ module Nppes
           #header = UpdatePack::Header.new(head.get_input_stream)
           extracted_filename="#{Dir.pwd}/#{data.name}"
           data.extract unless File.exists?(extracted_filename)
-          data = UpdatePack::Data.new(File.open(extracted_filename))
+          data = UpdatePack::Data.new(File.open(extracted_filename), interruption_check)
           #data = UpdatePack::Data.new(data.get_input_stream) #single entry! because of detect
           Nppes.logger.warn 'proceed data'
           data.proceed
@@ -39,6 +39,16 @@ module Nppes
           Delayed::Job.enqueue(Nppes::Jobs::IniterJob.new)
         end
 
+        def interruption_check
+          last_record=NpIdentifier.last
+          if last_record
+            puts "Possible interruption, continuing from the last record in the database: NPI=#{last_record.npi}"
+            last_record.npi
+          else
+            nil
+          end
+        end
+
         def init_base
           Nppes.logger.warn 'find init file'
           doc = Nokogiri::HTML(open(Nppes.updates_url))
@@ -46,8 +56,7 @@ module Nppes
             link['href'] =~ Nppes.initiate_signature
           end
           raise Exception.new('Initial file not found') unless link
-          proceed(prepare_file(link['href']))
-        end
+          proceed(prepare_file(link['href'])) end
 
         def check_updates
           Nppes.logger.warn 'find updates'
@@ -79,7 +88,7 @@ module Nppes
 
         protected
           def prepare_file(file_link)
-            "/home/dark/work/nppes/NPPES_Data_Dissemination_Mar_2014.zip"
+            "/home/dark/work/odesk/hisp_current/nppes/NPPES_Data_Dissemination_Dec_2013.zip20140111-26186-17dpliv"
             #"/home/dark/work/nppes/diss/arc.zip"
 
             #Nppes.logger.warn 'prepare file'

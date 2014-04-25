@@ -1,10 +1,13 @@
 module Nppes
 module UpdatePack
   class Data < UpdatePack::Base
-    def initialize(data_file)
+    def initialize(data_file,npi_interrupted_at=nil)
+      @npi_interrupted_at=npi_interrupted_at
       @file = data_file
-      @existing_npis=Nppes::NpIdentifier.pluck(:npi) #array of integers
+      #@existing_npis=Nppes::NpIdentifier.pluck(:npi) #array of integers
     end
+
+    #NpIdentifier.last.exists? puts "records exists, continue starts from the last record in the database" blah
 
     def set_or_clear_batches
       @npi_batch, @npi_address_batch, @npi_license_batch=[],[],[]
@@ -27,6 +30,23 @@ module UpdatePack
           set_or_clear_batches
           #oreak
         end
+        @fields = split_row(row)
+        if @npi_interrupted_at
+          @searchstarted||=Time.now
+          @ncount ||=0
+          curnpi=@fields.first.to_i
+          unless @npi_interrupted_at==curnpi
+            @ncount +=1
+            puts @ncount if @ncount%10000==0
+            next
+          else
+            @searchtime=Time.now-@searchstarted
+            puts "Time passed: #{@searchtime} sec."
+            puts "Skipped to last npi, continuing..."
+            sleep 5
+            @npi_interrupted_at=nil
+          end
+        end
         processed_row=proceed_row(row)
         @npi_batch << processed_row if processed_row  #packing npi_batch
       end
@@ -46,15 +66,14 @@ module UpdatePack
 
 
     def proceed_row(row, required_fields = RequiredFields)
-      @fields = split_row(row)
       current_npi=@fields[0].to_i
       nefia=non_empty_fields_indexes
 
-      unless @existing_npis.include? current_npi #old method first_or_initialize won't work because sql query creates, not update records.
+      #unless @existing_npis.include? current_npi #old method first_or_initialize won't work because sql query creates, not update records.
         nppes_record = Nppes::NpIdentifier.new(npi: current_npi)
-      else
-        return nil
-      end
+      #else
+        #return nil
+      #end
 
       #filling main model record(NpIdentifier)
       required_fields.fields.each_pair { |k, v| nppes_record.send("#{k}=", prepare_value(@fields, v)) }
@@ -72,7 +91,6 @@ module UpdatePack
           if subset#check if non_empty_fields_indexes contain all required fields
             entity.each_pair {|name, num| relation.send("#{name}=", prepare_value(@fields, num))}
             unless relation.valid?
-              byebug
               #byebug unless (nefa & entity.values).blank?
               ##не создавать сущности и заполнять пустые поля - лицензии к примеру
               ##nppes_record.send(s).delete(relation)
