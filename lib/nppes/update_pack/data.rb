@@ -4,7 +4,7 @@ module UpdatePack
     def initialize(data_file,npi_interrupted_at=nil)
       @npi_interrupted_at=npi_interrupted_at
       @file = data_file
-      #@existing_npis=Nppes::NpIdentifier.pluck(:npi) #array of integers
+      @batch_size_limit=1000
     end
 
     #NpIdentifier.last.exists? puts "records exists, continue starts from the last record in the database" blah
@@ -14,50 +14,34 @@ module UpdatePack
     end
 
     def proceed
-      @batch_size_limit=1000
-      batch_timer_checkset
+      batch_timer_check
       set_or_clear_batches
       parse(@file) do |row|
         if @npi_batch.size >= @batch_size_limit 
-          puts "customTimer: #{@cumulative}, count: #{@icount}";@cumulative=0;@icount=0
-          print_info;sleep 5
-          puts @npi_address_batch.size
-          puts @npi_license_batch.size
+          print_info
           NpIdentifier.import @npi_batch
-          form_npi_association_batch #now @npi_license_batch and npi_address_batch are modified to be imported
+          assign_ids_to_npi_association_batch 
           NpLicense.import @npi_license_batch
           NpAddress.import @npi_address_batch
           set_or_clear_batches
-          #oreak
         end
         @fields = split_row(row)
+        @curnpi=@fields.first.to_i
+
         if @npi_interrupted_at
-          @searchstarted||=Time.now
-          @ncount ||=0
-          curnpi=@fields.first.to_i
-          unless @npi_interrupted_at==curnpi
-            @ncount +=1
-            puts @ncount if @ncount%10000==0
-            next
-          else
-            @searchtime=Time.now-@searchstarted
-            puts "Time passed: #{@searchtime} sec."
-            puts "Skipped to last npi, continuing..."
-            sleep 5
-            @npi_interrupted_at=nil
-          end
+          next unless found_last_npi?(@curnpi)
         end
         processed_row=proceed_row(row)
         @npi_batch << processed_row if processed_row  #packing npi_batch
       end
      end
 
-    def form_npi_association_batch
+    def assign_ids_to_npi_association_batch
       resulted_ids=NpIdentifier.limit(@batch_size_limit).order('id desc').pluck(:id,:npi)#getting actual ids after import
       [@npi_license_batch, @npi_address_batch].each do |association|
         association.map! do |ass|
-          cur_npi=ass.last
-          cur_id=resulted_ids.rassoc(cur_npi).first
+          cur_processed_npi=ass.last
+          cur_id=resulted_ids.rassoc(cur_processed_npi).first
           ass.first.np_identifier_id=cur_id
           ass.first
         end
@@ -66,14 +50,8 @@ module UpdatePack
 
 
     def proceed_row(row, required_fields = RequiredFields)
-      current_npi=@fields[0].to_i
       nefia=non_empty_fields_indexes
-
-      #unless @existing_npis.include? current_npi #old method first_or_initialize won't work because sql query creates, not update records.
-        nppes_record = Nppes::NpIdentifier.new(npi: current_npi)
-      #else
-        #return nil
-      #end
+      nppes_record = Nppes::NpIdentifier.new(npi: @curnpi)
 
       #filling main model record(NpIdentifier)
       required_fields.fields.each_pair { |k, v| nppes_record.send("#{k}=", prepare_value(@fields, v)) }
@@ -83,26 +61,22 @@ module UpdatePack
       required_fields.relations.each_pair do |s, f|
         f.each do |entity|
           #relation = nppes_record.send(s).new
-          timer_on;@cumulative||=0;@icount||=0
+          timer_on
           v_f=get_validity_fields(s,entity) #v_f=validity_fields
           relation = s.constantize.new
           subset=(v_f-nefia).empty?
-          @cumulative+=timer_off;@icount+=1
+          timer_off
           if subset#check if non_empty_fields_indexes contain all required fields
             entity.each_pair {|name, num| relation.send("#{name}=", prepare_value(@fields, num))}
             unless relation.valid?
-              #byebug unless (nefa & entity.values).blank?
-              ##не создавать сущности и заполнять пустые поля - лицензии к примеру
-              ##nppes_record.send(s).delete(relation)
-              #break
+              byebug
             end
           else
             next
           end
-          add_to_relevant_batch(s,relation,current_npi)
+          add_to_relevant_batch(s,relation,@curnpi)
         end
       end
-    #  nppes_record.save if nppes_record.valid?
       nppes_record
     end
 
@@ -125,12 +99,18 @@ module UpdatePack
       end
     end
 
-    def timer_on
+    def timer_on(options={})
+      if options[:reset]
+        @cumulative=0;@icount=0
+        return
+      end
+      @cumulative||=0;@icount||=0
       @mark_one=Time.now
     end
 
     def timer_off
       result=Time.now-@mark_one
+      @cumulative+=result;@icount+=1
       result
     end
 
@@ -156,17 +136,38 @@ module UpdatePack
       result.blank? ? nil: result #empty string "" brake postgresql import, should return nil instead
     end
 
-    def batch_timer_checkset
+    def batch_timer_check
       @seconds_for_previous_batch=Time.now-@last_time_mark if @last_time_mark
       @last_time_mark = Time.now
     end
 
+    def found_last_npi?(curnpi)
+      @searchstarted||=Time.now
+      @ncount ||=0
+      unless @npi_interrupted_at==curnpi
+        @ncount +=1
+        puts @ncount if @ncount%10000==0
+        return false
+      else
+        @searchtime=Time.now-@searchstarted
+        puts "Time passed: #{@searchtime} sec."
+        puts "Skipped to last npi, continuing..."
+        sleep 5
+        @npi_interrupted_at=nil
+        return true
+      end
+    end
+
     def print_info
-      batch_timer_checkset
-      records_total ||= 0
-      records_total+=@batch_size_limit
+      batch_timer_check
+      @records_total ||= 0
+      @records_total+=@batch_size_limit
       puts "elapsed: #{@seconds_for_previous_batch}"
-      puts "total_records: #{records_total}"
+      puts "total_records: #{@records_total}"
+      puts "customTimer: #{@cumulative}, count: #{@icount}"
+      timer_on(:reset => true)
+      puts "addresses imported: #{@npi_address_batch.size}"
+      puts "licenses imported: #{@npi_license_batch.size}"
     end
     end
   end
