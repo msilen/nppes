@@ -4,7 +4,7 @@ module UpdatePack
     def initialize(data_file,npi_interrupted_at=nil)
       @npi_interrupted_at=npi_interrupted_at
       @file = data_file
-      @batch_size_limit=1000
+      @batch_size_limit=2000
     end
 
     #NpIdentifier.last.exists? puts "records exists, continue starts from the last record in the database" blah
@@ -61,16 +61,16 @@ module UpdatePack
       required_fields.relations.each_pair do |s, f|
         f.each do |entity|
           #relation = nppes_record.send(s).new
-          timer_on
           v_f=get_validity_fields(s,entity) #v_f=validity_fields
-          relation = s.constantize.new
+          timer_on
           subset=(v_f-nefia).empty?
           timer_off
           if subset#check if non_empty_fields_indexes contain all required fields
+            relation = s.constantize.new
             entity.each_pair {|name, num| relation.send("#{name}=", prepare_value(@fields, num))}
-            unless relation.valid?
-              byebug
-            end
+            #unless relation.valid?
+              #byebug
+            #end
           else
             next
           end
@@ -162,12 +162,12 @@ module UpdatePack
       batch_timer_check
       @records_total ||= 0
       @records_total+=@batch_size_limit
-      puts "elapsed: #{@seconds_for_previous_batch}"
-      puts "total_records: #{@records_total}"
+      puts "\nelapsed: #{@seconds_for_previous_batch}"
+      puts "imported records total: #{@records_total}"
       puts "customTimer: #{@cumulative}, count: #{@icount}"
       timer_on(:reset => true)
-      puts "addresses imported: #{@npi_address_batch.size}"
-      puts "licenses imported: #{@npi_license_batch.size}"
+      puts "np_addresses imported: #{@npi_address_batch.size}"
+      puts "np_licenses imported: #{@npi_license_batch.size}"
     end
     end
   end

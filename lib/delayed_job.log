@@ -1,0 +1,194 @@
+# Logfile created on 2014-04-28 14:24:53 +0900 by logger.rb/44203
+W, [2014-04-28T14:24:53.923400 #6742]  WARN -- : find init file
+W, [2014-04-28T14:24:54.185394 #6742]  WARN -- : proceed file
+W, [2014-04-28T14:54:38.032801 #7448]  WARN -- : find init file
+W, [2014-04-28T14:54:38.798319 #7448]  WARN -- : proceed file
+W, [2014-04-28T14:54:39.166405 #7448]  WARN -- : proceed data
+W, [2014-04-28T15:20:37.158847 #8061]  WARN -- : find init file
+W, [2014-04-28T15:20:37.985148 #8061]  WARN -- : prepare file
+W, [2014-04-28T15:38:02.166672 #8061]  WARN -- : proceed file
+W, [2014-04-28T15:40:40.094071 #9271]  WARN -- : find init file
+W, [2014-04-28T15:40:41.379298 #9271]  WARN -- : prepare file
+W, [2014-04-28T15:43:40.989194 #9271]  WARN -- : proceed file
+W, [2014-04-28T16:20:17.098560 #10482]  WARN -- : find init file
+W, [2014-04-28T16:20:18.013514 #10482]  WARN -- : prepare file
+W, [2014-04-28T16:32:44.376005 #11047]  WARN -- : find init file
+W, [2014-04-28T16:33:34.046095 #11095]  WARN -- : find init file
+W, [2014-04-28T16:33:34.331635 #11095]  WARN -- : prepare file
+W, [2014-04-28T16:51:27.709232 #11703]  WARN -- : find init file
+W, [2014-04-28T17:05:32.554296 #12115]  WARN -- : find init file
+W, [2014-04-28T17:06:30.925000 #12166]  WARN -- : find init file
+W, [2014-04-28T17:08:38.148651 #12166]  WARN -- : prepare file
+W, [2014-04-28T17:09:30.475939 #12386]  WARN -- : find init file
+W, [2014-04-28T17:09:30.737404 #12386]  WARN -- : prepare file
+W, [2014-04-28T22:43:47.995424 #16485]  WARN -- : find init file
+W, [2014-04-28T22:43:49.122653 #16485]  WARN -- : prepare file
+W, [2014-04-28T22:46:39.864642 #16626]  WARN -- : find init file
+W, [2014-04-28T22:46:40.267377 #16626]  WARN -- : prepare file
+W, [2014-04-28T22:46:49.549742 #16664]  WARN -- : find init file
+W, [2014-04-28T22:46:49.811444 #16664]  WARN -- : prepare file
+W, [2014-04-28T22:48:47.812033 #16731]  WARN -- : find init file
+W, [2014-04-28T22:48:48.084772 #16731]  WARN -- : prepare file
+W, [2014-04-28T22:50:23.491161 #16731]  WARN -- : proceed file
+W, [2014-04-28T22:50:29.445495 #16731]  WARN -- : proceed data
+W, [2014-04-28T22:51:32.890061 #16945]  WARN -- : find init file
+W, [2014-04-28T22:51:33.401860 #16945]  WARN -- : prepare file
+W, [2014-04-28T22:58:51.300991 #16945]  WARN -- : proceed file
+W, [2014-04-28T23:00:40.796915 #17721]  WARN -- : find init file
+W, [2014-04-28T23:00:41.882218 #17721]  WARN -- : prepare file
+W, [2014-04-28T23:03:15.902636 #17721]  WARN -- : proceed file
+W, [2014-04-28T23:55:05.037025 #19187]  WARN -- : find init file
+W, [2014-04-28T23:55:05.848323 #19187]  WARN -- : prepare file
+W, [2014-04-28T23:56:59.302763 #19187]  WARN -- : proceed file
+W, [2014-04-29T00:00:23.867490 #19614]  WARN -- : find init file
+W, [2014-04-29T00:00:43.322031 #19703]  WARN -- : find init file
+W, [2014-04-29T00:01:40.472724 #19822]  WARN -- : find init file
+W, [2014-04-29T00:04:22.963781 #19822]  WARN -- : prepare file
+W, [2014-04-29T00:04:22.964099 #19822]  WARN -- : proceed file
+W, [2014-04-29T00:06:52.410351 #20289]  WARN -- : find init file
+W, [2014-04-29T00:09:28.449795 #20289]  WARN -- : prepare file
+W, [2014-04-29T00:09:28.449937 #20289]  WARN -- : proceed file
+W, [2014-04-29T00:09:45.373789 #20589]  WARN -- : find init file
+W, [2014-04-29T00:11:14.726147 #20589]  WARN -- : prepare file
+W, [2014-04-29T00:11:23.927699 #20653]  WARN -- : find init file
+W, [2014-04-29T00:13:31.458842 #20653]  WARN -- : prepare file
+W, [2014-04-29T00:13:31.459020 #20653]  WARN -- : proceed file
+W, [2014-04-29T00:14:35.313644 #20853]  WARN -- : find init file
+W, [2014-04-29T00:14:49.879791 #20853]  WARN -- : prepare file
+W, [2014-04-29T00:14:49.879983 #20853]  WARN -- : proceed file
+W, [2014-04-29T00:15:32.367485 #20953]  WARN -- : find init file
+W, [2014-04-29T00:15:32.652964 #20953]  WARN -- : prepare file
+W, [2014-04-29T00:16:13.696029 #20953]  WARN -- : proceed file
+W, [2014-04-29T00:16:17.134666 #21019]  WARN -- : find init file
+W, [2014-04-29T00:16:17.840416 #21019]  WARN -- : prepare file
+W, [2014-04-29T00:16:18.582627 #21019]  WARN -- : proceed file
+W, [2014-04-29T00:16:20.443764 #21019]  WARN -- : proceed data
+W, [2014-04-29T00:16:59.956550 #21096]  WARN -- : find init file
+W, [2014-04-29T00:17:00.244382 #21096]  WARN -- : prepare file
+W, [2014-04-29T00:17:00.244498 #21096]  WARN -- : proceed file
+W, [2014-04-29T00:17:00.331740 #21096]  WARN -- : proceed data
+W, [2014-04-29T00:18:16.517399 #21153]  WARN -- : find init file
+W, [2014-04-29T00:19:31.278457 #21210]  WARN -- : find init file
+W, [2014-04-29T00:19:31.604043 #21210]  WARN -- : prepare file
+W, [2014-04-29T00:19:31.604161 #21210]  WARN -- : proceed file
+W, [2014-04-29T00:19:31.639890 #21210]  WARN -- : proceed data
+W, [2014-04-29T00:20:03.280407 #21307]  WARN -- : find init file
+W, [2014-04-29T00:20:03.572300 #21307]  WARN -- : prepare file
+W, [2014-04-29T00:20:03.572478 #21307]  WARN -- : proceed file
+W, [2014-04-29T00:20:03.723677 #21307]  WARN -- : proceed data
+W, [2014-04-29T00:24:29.869814 #21602]  WARN -- : find init file
+W, [2014-04-29T00:24:30.401862 #21602]  WARN -- : prepare file
+W, [2014-04-29T00:24:30.401972 #21602]  WARN -- : proceed file
+W, [2014-04-29T14:08:33.229921 #4468]  WARN -- : find init file
+W, [2014-04-29T14:08:34.650864 #4468]  WARN -- : prepare file
+W, [2014-04-29T14:08:34.650997 #4468]  WARN -- : proceed file
+W, [2014-04-29T14:10:31.438888 #4782]  WARN -- : find init file
+W, [2014-04-29T14:10:31.584360 #4782]  WARN -- : prepare file
+W, [2014-04-29T14:10:31.584467 #4782]  WARN -- : proceed file
+W, [2014-04-29T14:14:07.826275 #5500]  WARN -- : find init file
+W, [2014-04-29T14:14:08.015997 #5500]  WARN -- : prepare file
+W, [2014-04-29T14:14:08.016136 #5500]  WARN -- : proceed file
+W, [2014-04-29T14:14:08.742994 #5500]  WARN -- : proceed data
+W, [2014-04-29T14:42:52.562499 #6250]  WARN -- : find init file
+W, [2014-04-29T14:42:52.989584 #6250]  WARN -- : prepare file
+W, [2014-04-29T14:42:52.989762 #6250]  WARN -- : proceed file
+W, [2014-04-29T14:43:18.406411 #6345]  WARN -- : find init file
+W, [2014-04-29T14:45:29.495806 #6345]  WARN -- : prepare file
+W, [2014-04-29T14:45:29.536952 #6345]  WARN -- : proceed file
+W, [2014-04-29T14:46:56.065790 #7090]  WARN -- : find init file
+W, [2014-04-29T14:46:56.147418 #7090]  WARN -- : prepare file
+W, [2014-04-29T14:46:56.147542 #7090]  WARN -- : proceed file
+W, [2014-04-29T14:56:39.220234 #7391]  WARN -- : find init file
+W, [2014-04-29T14:58:35.276732 #7391]  WARN -- : prepare file
+W, [2014-04-29T14:58:35.335871 #7391]  WARN -- : proceed file
+W, [2014-04-29T15:01:25.428283 #7391]  WARN -- : proceed data
+W, [2014-04-29T15:16:31.565843 #8117]  WARN -- : find init file
+W, [2014-04-29T15:16:32.932863 #8117]  WARN -- : prepare file
+W, [2014-04-29T15:16:32.932975 #8117]  WARN -- : proceed file
+W, [2014-04-29T15:16:33.115443 #8117]  WARN -- : proceed data
+W, [2014-04-29T15:54:23.540367 #8914]  WARN -- : find init file
+W, [2014-04-29T15:54:24.201322 #8914]  WARN -- : prepare file
+W, [2014-04-29T15:54:24.201434 #8914]  WARN -- : proceed file
+W, [2014-04-29T15:54:24.722629 #8914]  WARN -- : proceed data
+W, [2014-04-29T16:57:12.851092 #10895]  WARN -- : find init file
+W, [2014-04-29T16:57:13.947965 #10895]  WARN -- : prepare file
+W, [2014-04-29T16:57:13.948114 #10895]  WARN -- : proceed file
+W, [2014-04-29T16:57:14.554648 #10895]  WARN -- : proceed data
+W, [2014-04-29T17:07:44.301509 #11172]  WARN -- : find init file
+W, [2014-04-29T17:07:44.761837 #11172]  WARN -- : prepare file
+W, [2014-04-29T17:07:44.761976 #11172]  WARN -- : proceed file
+W, [2014-04-29T17:07:44.983373 #11172]  WARN -- : proceed data
+W, [2014-04-29T17:17:59.482521 #11458]  WARN -- : find init file
+W, [2014-04-29T17:18:00.946845 #11458]  WARN -- : prepare file
+W, [2014-04-29T17:18:00.947008 #11458]  WARN -- : proceed file
+W, [2014-04-29T17:18:01.110622 #11458]  WARN -- : proceed data
+W, [2014-04-29T17:19:15.576824 #11522]  WARN -- : find init file
+W, [2014-04-29T17:19:15.587943 #11522]  WARN -- : prepare file
+W, [2014-04-29T17:19:15.588057 #11522]  WARN -- : proceed file
+W, [2014-04-29T17:19:18.112168 #11522]  WARN -- : proceed data
+W, [2014-04-29T17:20:35.197986 #11580]  WARN -- : find init file
+W, [2014-04-29T17:20:36.213220 #11580]  WARN -- : prepare file
+W, [2014-04-29T17:20:36.213349 #11580]  WARN -- : proceed file
+W, [2014-04-29T17:20:36.267455 #11580]  WARN -- : proceed data
+W, [2014-04-29T17:23:54.670025 #11710]  WARN -- : find init file
+W, [2014-04-29T17:23:56.143781 #11710]  WARN -- : prepare file
+W, [2014-04-29T17:23:56.143956 #11710]  WARN -- : proceed file
+W, [2014-04-29T17:23:56.260103 #11710]  WARN -- : proceed data
+W, [2014-04-30T12:28:38.412372 #18366]  WARN -- : find init file
+W, [2014-04-30T12:28:40.101944 #18366]  WARN -- : prepare file
+W, [2014-04-30T12:28:40.102079 #18366]  WARN -- : proceed file
+W, [2014-04-30T12:28:41.854612 #18366]  WARN -- : proceed data
+W, [2014-04-30T12:31:29.628101 #18938]  WARN -- : find init file
+W, [2014-04-30T12:31:29.643023 #18938]  WARN -- : prepare file
+W, [2014-04-30T12:31:29.643168 #18938]  WARN -- : proceed file
+W, [2014-04-30T12:31:29.776710 #18938]  WARN -- : proceed data
+W, [2014-04-30T12:35:03.675677 #19042]  WARN -- : find init file
+W, [2014-04-30T12:35:04.841159 #19042]  WARN -- : prepare file
+W, [2014-04-30T12:35:04.841346 #19042]  WARN -- : proceed file
+W, [2014-04-30T12:35:04.977397 #19042]  WARN -- : proceed data
+W, [2014-04-30T12:35:54.272355 #19095]  WARN -- : find init file
+W, [2014-04-30T12:35:54.383233 #19095]  WARN -- : prepare file
+W, [2014-04-30T12:35:54.383354 #19095]  WARN -- : proceed file
+W, [2014-04-30T12:35:54.523833 #19095]  WARN -- : proceed data
+W, [2014-04-30T12:36:38.416335 #19143]  WARN -- : find init file
+W, [2014-04-30T12:36:39.432142 #19143]  WARN -- : prepare file
+W, [2014-04-30T12:36:39.432260 #19143]  WARN -- : proceed file
+W, [2014-04-30T12:36:39.533245 #19143]  WARN -- : proceed data
+W, [2014-04-30T12:37:13.047466 #19190]  WARN -- : find init file
+W, [2014-04-30T12:37:13.057639 #19190]  WARN -- : prepare file
+W, [2014-04-30T12:37:13.057762 #19190]  WARN -- : proceed file
+W, [2014-04-30T12:37:13.174219 #19190]  WARN -- : proceed data
+W, [2014-04-30T12:37:43.526695 #19235]  WARN -- : find init file
+W, [2014-04-30T12:38:24.032520 #19282]  WARN -- : find init file
+W, [2014-04-30T12:38:24.043103 #19282]  WARN -- : prepare file
+W, [2014-04-30T12:38:24.043240 #19282]  WARN -- : proceed file
+W, [2014-04-30T12:38:24.080264 #19282]  WARN -- : proceed data
+W, [2014-04-30T12:39:36.557647 #19340]  WARN -- : find init file
+W, [2014-04-30T12:39:44.618293 #19377]  WARN -- : find init file
+W, [2014-04-30T12:39:44.628555 #19377]  WARN -- : prepare file
+W, [2014-04-30T12:39:44.628673 #19377]  WARN -- : proceed file
+W, [2014-04-30T12:39:44.661345 #19377]  WARN -- : proceed data
+W, [2014-04-30T12:40:33.481393 #19429]  WARN -- : find init file
+W, [2014-04-30T12:40:33.492083 #19429]  WARN -- : prepare file
+W, [2014-04-30T12:40:33.492193 #19429]  WARN -- : proceed file
+W, [2014-04-30T12:40:33.572473 #19429]  WARN -- : proceed data
+W, [2014-04-30T12:41:07.410344 #19473]  WARN -- : find init file
+W, [2014-04-30T12:41:07.526542 #19473]  WARN -- : prepare file
+W, [2014-04-30T12:41:07.526718 #19473]  WARN -- : proceed file
+W, [2014-04-30T12:41:07.606856 #19473]  WARN -- : proceed data
+W, [2014-04-30T12:43:12.268630 #19550]  WARN -- : find init file
+W, [2014-04-30T12:43:12.282728 #19550]  WARN -- : prepare file
+W, [2014-04-30T12:43:12.282865 #19550]  WARN -- : proceed file
+W, [2014-04-30T12:43:12.352627 #19550]  WARN -- : proceed data
+W, [2014-04-30T12:44:00.748669 #19601]  WARN -- : find init file
+W, [2014-04-30T12:44:00.760109 #19601]  WARN -- : prepare file
+W, [2014-04-30T12:44:00.760222 #19601]  WARN -- : proceed file
+W, [2014-04-30T12:44:00.843024 #19601]  WARN -- : proceed data
+W, [2014-04-30T12:46:38.162652 #19743]  WARN -- : find init file
+W, [2014-04-30T12:46:38.408499 #19743]  WARN -- : prepare file
+W, [2014-04-30T12:46:38.408674 #19743]  WARN -- : proceed file
+W, [2014-04-30T12:46:39.931466 #19743]  WARN -- : proceed data
+W, [2014-04-30T12:46:56.757216 #19785]  WARN -- : find init file
+W, [2014-04-30T12:46:57.233162 #19785]  WARN -- : prepare file
+W, [2014-04-30T12:46:57.233335 #19785]  WARN -- : proceed file
+W, [2014-04-30T12:46:57.353003 #19785]  WARN -- : proceed data
